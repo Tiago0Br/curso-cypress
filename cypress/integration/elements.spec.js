@@ -58,4 +58,14 @@ describe('Work with basic elements', () => {
 
         cy.get("[name=formSexo]").should('have.length', 2)
     })
+
+    it('Checkbox', () => {
+        cy.get('#formComidaPizza')
+            .click()
+            .should('be.checked')
+
+        cy.get('[name=formComidaFavorita]').click({ multiple: true })
+        cy.get('#formComidaPizza').should('not.be.checked')
+        cy.get('#formComidaVegetariana').should('be.checked')
+    })
 })
