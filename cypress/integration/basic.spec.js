@@ -16,4 +16,13 @@ describe('Cypress basics', () => {
         //TODO imprimir o log no console
         //TODO escrever o log em um campo de texto
     })
+
+    it.only('Should find and interact with an element', () => {
+        cy.visit('http://www.wcaquino.me/cypress/componentes.html')
+
+        cy.get('nao existe')
+        cy.get('#buttonSimple')
+            .click()
+            .should("have.value", 'Obrigado!')
+    })
 })
