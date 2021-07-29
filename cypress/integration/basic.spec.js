@@ -22,7 +22,7 @@ describe('Cypress basics', () => {
     it.only('Should find and interact with an element', () => {
         cy.visit('http://www.wcaquino.me/cypress/componentes.html')
 
-        cy.get('nao existe')
+        // cy.get('nao existe')
         cy.get('#buttonSimple')
             .click()
             .should("have.value", 'Obrigado!')
