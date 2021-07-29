@@ -7,6 +7,7 @@ describe('Work with basic elements', () => {
         // cy.get('body').should("have.text", 'Cuidado')
         cy.get('span').should("contain", 'Cuidado')
         // cy.get('div').should("contain", 'Cuidado')
+        cy.get('span').should("contain", 'Cuidado')
         cy.get('.facilAchar').should("have.text", 'Cuidado onde clica, muitas armadilhas...')
     })
 })
