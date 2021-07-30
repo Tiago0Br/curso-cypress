@@ -77,5 +77,14 @@ describe('Work with basic elements', () => {
         cy.get('[data-test=dataEscolaridade]')
             .select('1graucomp')
             .should('have.value', '1graucomp')
+
+        //TODO Validar as opções do combo
+    })
+
+    it('Combo multiplo', () => {
+        cy.get('[data-testid=dataEsportes]')
+            .select(['natacao', 'Corrida', 'nada'])
+
+        //TODO Validar as opções do combo múltiplo
     })
 })
