@@ -5,6 +5,7 @@ Repositório do curso [Testes de aplicações modernas com Cypress](https://www.
 ## Como executar o projeto
 
 - Clonar o repositório
+
 via HTTPS
 `git clone https://github.com/Tiago0Br/curso-cypress.git`  
 via SSH
