@@ -26,3 +26,7 @@ via SSH
 ### Executar os testes em modo Headless
 
 `npx cypress run`
+
+## Downloads
+- Apostila de comandos do Cypress em PDF: [baixar](https://github.com/Tiago0Br/curso-cypress/files/7031586/comandosCypress.pdf)
+- Apostila de comandos do Cypress em Docx: [baixar](https://github.com/Tiago0Br/curso-cypress/files/7031586/comandosCypress.docx)
