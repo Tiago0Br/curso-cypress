@@ -29,4 +29,4 @@ via SSH
 
 ## Downloads
 - Apostila de comandos do Cypress em PDF: [baixar](https://github.com/Tiago0Br/curso-cypress/files/7031586/comandosCypress.pdf)
-- Apostila de comandos do Cypress em Docx: [baixar](https://github.com/Tiago0Br/curso-cypress/files/7031586/comandosCypress.docx)
+- Apostila de comandos do Cypress em Docx: [baixar](https://github.com/Tiago0Br/curso-cypress/files/7031582/comandosCypress.docx)
