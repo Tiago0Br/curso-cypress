@@ -27,6 +27,5 @@ via SSH
 
 `npx cypress run`
 
-## Downloads
-- Apostila de comandos do Cypress em PDF: [baixar](https://github.com/Tiago0Br/curso-cypress/files/7031586/comandosCypress.pdf)
-- Apostila de comandos do Cypress em Docx: [baixar](https://github.com/Tiago0Br/curso-cypress/files/7031582/comandosCypress.docx)
+## Apostila
+- [Repositório](https://github.com/Tiago0Br/apostila-curso-cypress) com os comandos do Cypress aprendidos no curso.
