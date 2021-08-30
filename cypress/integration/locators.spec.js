@@ -16,4 +16,8 @@ describe('Work with basic elements', () => {
         cy.get('#tabelaUsuarios td:contains(\'Doutorado\'):eq(0) ~ td:eq(3) > input')
         cy.get('#tabelaUsuarios tr:contains(\'Doutorado\'):eq(0) td:eq(6) input')
     })
+
+    it('using xpath', () => {
+        cy.xpath('//input')
+    })
 })
