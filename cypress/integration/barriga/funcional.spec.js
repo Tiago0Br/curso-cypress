@@ -18,12 +18,20 @@ describe('Should test at a functional level', () => {
     it('Should update an account', () => {
         // cy.get(':nth-child(7) > nth-child(2) > .fa-edit')
         cy.acessarMenuConta()
-        
+
         cy.xpath(loc.CONTAS.XP_BTN_ALTERAR).click()
         cy.get(loc.CONTAS.NOME)
             .clear()
             .type('Conta alterada')
         cy.get(loc.CONTAS.BTN_SALVAR).click()
         cy.get(loc.MESSAGE).should('contain', 'Conta atualizada com sucesso!')
+    })
+
+    it('Should not create account with the same name', () => {
+        cy.acessarMenuConta()
+
+        cy.get(loc.CONTAS.NOME).type('Conta alterada')
+        cy.get(loc.CONTAS.BTN_SALVAR).click()
+        cy.get(loc.MESSAGE).should('contain', 'code 400')
     })
 })
