@@ -1,8 +1,12 @@
 /// <reference types="cypress" />
 
 describe('Should test at a functional level', () => {
+    let token
     before(() => {
-        // cy.login('a@a', 'a')
+        cy.getToken(Cypress.env('email'), Cypress.env('senha'))
+            .then(tkn => {
+                token = tkn
+            })
     })
 
     beforeEach(() => {
@@ -12,13 +16,18 @@ describe('Should test at a functional level', () => {
     it('Should create an account', () => {
         cy.request({
             method: 'POST',
-            url: 'https://barrigarest.wcaquino.me/signin',
+            url: 'https://barrigarest.wcaquino.me/contas',
+            headers: { Authorization: `JWT ${token}` },
             body: {
-                email: Cypress.env('email'),
-                senha: Cypress.env('senha'),
-                redirecionar: false
+                nome: 'Conta via rest'
             }
-        }).its('body.token').should('not.be.empty')
+        }).as('response')
+
+        cy.get('@response').then(res => {
+            expect(res.status).to.be.equal(201)
+            expect(res.body).to.have.property('id')
+            expect(res.body).to.have.property('nome', 'Conta via rest')
+        })
     })
 
     it('Should update an account', () => {
