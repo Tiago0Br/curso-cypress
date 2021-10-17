@@ -42,7 +42,33 @@ describe('Should test at a functional level', () => {
     })
 
     it.only('Should create an account', () => {
+        cy.intercept(
+            'GET',
+            '/contas',
+            [
+                { id: 1, nome: 'Carteira', visivel: true, usuario_id: 1 },
+                { id: 2, nome: 'Banco', visivel: true, usuario_id: 1 }
+            ]
+        ).as('contas')
+
+        cy.intercept(
+            'POST',
+            '/contas',
+            { id: 3, nome: 'Conta de teste', visivel: true, usuario_id: 1 }
+        ).as('saveConta')
+
         cy.acessarMenuConta()
+
+        cy.intercept(
+            'GET',
+            '/contas',
+            [
+                { id: 1, nome: 'Carteira', visivel: true, usuario_id: 1 },
+                { id: 2, nome: 'Banco', visivel: true, usuario_id: 1 },
+                { id: 3, nome: 'Conta de teste', visivel: true, usuario_id: 1 }
+            ]
+        ).as('contasSave')
+
         cy.inserirConta('Conta de teste')
         cy.get(loc.MESSAGE).should('contain', 'Conta inserida com sucesso')
     })
