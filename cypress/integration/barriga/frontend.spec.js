@@ -4,6 +4,10 @@ import loc from "../../support/locators"
 import '../../support/commandsContas'
 
 describe('Should test at a functional level', () => {
+    after(() => {
+        cy.clearLocalStorage()
+    })
+
     before(() => {
         cy.intercept(
             'POST',
