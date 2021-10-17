@@ -87,7 +87,7 @@ describe('Should test at a functional level', () => {
         cy.get('@response').its('body.id').should('exist')
     })
 
-    it.only('Should get balance', () => {
+    it('Should get balance', () => {
         cy.request({
             method: 'GET',
             url: '/saldo',
@@ -136,5 +136,17 @@ describe('Should test at a functional level', () => {
     })
 
     it('Should remove a transaction', () => {
+        cy.request({
+            method: 'GET',
+            url: '/transacoes',
+            headers: { Authorization: `JWT ${token}` },
+            qs: { descricao: 'Movimentacao para exclusao' }
+        }).then(res => {
+            cy.request({
+                method: 'DELETE',
+                url: `/transacoes/${res.body[0].id}`,
+                headers: { Authorization: `JWT ${token}` }
+            }).its('status').should('be.equal', 204)
+        })
     })
 })
