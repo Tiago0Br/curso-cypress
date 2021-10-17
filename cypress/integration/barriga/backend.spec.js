@@ -2,12 +2,12 @@
 const dayjs = require('dayjs')
 
 describe('Should test at a functional level', () => {
-    let token
+    // let token
     before(() => {
         cy.getToken(Cypress.env('email'), Cypress.env('senha'))
-            .then(tkn => {
-                token = tkn
-            })
+            // .then(tkn => {
+            //     token = tkn
+            // })
     })
 
     beforeEach(() => {
@@ -18,7 +18,6 @@ describe('Should test at a functional level', () => {
         cy.request({
             method: 'POST',
             url: '/contas',
-            headers: { Authorization: `JWT ${token}` },
             body: {
                 nome: 'Conta via rest'
             }
@@ -37,7 +36,6 @@ describe('Should test at a functional level', () => {
                 cy.request({
                     method: 'PUT',
                     url: `/contas/${contaId}`,
-                    headers: { Authorization: `JWT ${token}` },
                     body: {
                         nome: 'Conta alterada via rest'
                     }
@@ -51,7 +49,6 @@ describe('Should test at a functional level', () => {
         cy.request({
             method: 'POST',
             url: '/contas',
-            headers: { Authorization: `JWT ${token}` },
             body: {
                 nome: 'Conta mesmo nome'
             },
@@ -70,7 +67,6 @@ describe('Should test at a functional level', () => {
                 cy.request({
                     method: 'POST',
                     url: '/transacoes',
-                    headers: { Authorization: `JWT ${token}` },
                     body: {
                         conta_id: contaId,
                         data_pagamento: dayjs().add(1, 'day').format('DD/MM/YYYY'),
@@ -90,8 +86,7 @@ describe('Should test at a functional level', () => {
     it('Should get balance', () => {
         cy.request({
             method: 'GET',
-            url: '/saldo',
-            headers: { Authorization: `JWT ${token}` },
+            url: '/saldo'
         }).then(res => {
             let saldoConta = null
             res.body.forEach(c => {
@@ -103,13 +98,11 @@ describe('Should test at a functional level', () => {
         cy.request({
             method: 'GET',
             url: '/transacoes',
-            headers: { Authorization: `JWT ${token}` },
             qs: { descricao: 'Movimentacao 1, calculo saldo' }
         }).then(res => {
             cy.request({
                 method: 'PUT',
                 url: `/transacoes/${res.body[0].id}`,
-                headers: { Authorization: `JWT ${token}` },
                 body: {
                     status: true,
                     data_transacao: dayjs(res.body[0].data_transacao).format('DD/MM/YYYY'),
@@ -124,8 +117,7 @@ describe('Should test at a functional level', () => {
 
         cy.request({
             method: 'GET',
-            url: '/saldo',
-            headers: { Authorization: `JWT ${token}` },
+            url: '/saldo'
         }).then(res => {
             let saldoConta = null
             res.body.forEach(c => {
@@ -139,13 +131,11 @@ describe('Should test at a functional level', () => {
         cy.request({
             method: 'GET',
             url: '/transacoes',
-            headers: { Authorization: `JWT ${token}` },
             qs: { descricao: 'Movimentacao para exclusao' }
         }).then(res => {
             cy.request({
                 method: 'DELETE',
                 url: `/transacoes/${res.body[0].id}`,
-                headers: { Authorization: `JWT ${token}` }
             }).its('status').should('be.equal', 204)
         })
     })
