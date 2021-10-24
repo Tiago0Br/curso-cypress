@@ -2,55 +2,21 @@
 
 import loc from "../../support/locators"
 import '../../support/commandsContas'
+import buildEnv from '../../support/buildEnv'
 
 describe('Should test at a functional level', () => {
     after(() => {
         cy.clearLocalStorage()
     })
 
-    before(() => {
-        cy.intercept(
-            'POST',
-            '/signin',
-            {
-                id: 1000,
-                nome: 'Usuário falso',
-                token: 'Uma string muito grande que não deveria ser aceito, mas na verdade vai'
-            }
-        ).as('signin')
-
-        cy.intercept(
-            'GET',
-            '/saldo',
-            [{
-                conta_id: 999,
-                conta: 'Carteira',
-                saldo: '100.00'
-            },
-            {
-                conta_id: 9909,
-                conta: 'Banco',
-                saldo: '10000000.00'
-            }]
-        ).as('saldo')
-        cy.login('a@a', 'Senha errada')
-    })
-
     beforeEach(() => {
+        buildEnv()
+        cy.login('a@a', 'Senha errada')
         cy.get(loc.MENU.HOME).click()
-        cy.resetApp()
+        // cy.resetApp()
     })
 
     it('Should create an account', () => {
-        cy.intercept(
-            'GET',
-            '/contas',
-            [
-                { id: 1, nome: 'Carteira', visivel: true, usuario_id: 1 },
-                { id: 2, nome: 'Banco', visivel: true, usuario_id: 1 }
-            ]
-        ).as('contas')
-
         cy.intercept(
             'POST',
             '/contas',
@@ -73,22 +39,13 @@ describe('Should test at a functional level', () => {
         cy.get(loc.MESSAGE).should('contain', 'Conta inserida com sucesso')
     })
 
-    it.only('Should update an account', () => {
-        cy.intercept(
-            'GET',
-            '/contas',
-            [
-                { id: 1, nome: 'Carteira', visivel: true, usuario_id: 1 },
-                { id: 2, nome: 'Banco', visivel: true, usuario_id: 1 }
-            ]
-        ).as('contas')
-
+    it('Should update an account', () => {
         cy.intercept(
             'PUT',
             '/contas/**',
             { id: 1, nome: 'Conta alterada', visivel: true, usuario_id: 1 }
         )
-        // cy.get(':nth-child(7) > nth-child(2) > .fa-edit')
+
         cy.acessarMenuConta()
 
         cy.xpath(loc.CONTAS.FN_XP_BTN_ALTERAR('Carteira')).click()
