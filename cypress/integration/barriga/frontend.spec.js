@@ -41,7 +41,7 @@ describe('Should test at a functional level', () => {
         cy.resetApp()
     })
 
-    it.only('Should create an account', () => {
+    it('Should create an account', () => {
         cy.intercept(
             'GET',
             '/contas',
@@ -73,11 +73,25 @@ describe('Should test at a functional level', () => {
         cy.get(loc.MESSAGE).should('contain', 'Conta inserida com sucesso')
     })
 
-    it('Should update an account', () => {
+    it.only('Should update an account', () => {
+        cy.intercept(
+            'GET',
+            '/contas',
+            [
+                { id: 1, nome: 'Carteira', visivel: true, usuario_id: 1 },
+                { id: 2, nome: 'Banco', visivel: true, usuario_id: 1 }
+            ]
+        ).as('contas')
+
+        cy.intercept(
+            'PUT',
+            '/contas/**',
+            { id: 1, nome: 'Conta alterada', visivel: true, usuario_id: 1 }
+        )
         // cy.get(':nth-child(7) > nth-child(2) > .fa-edit')
         cy.acessarMenuConta()
 
-        cy.xpath(loc.CONTAS.FN_XP_BTN_ALTERAR('Conta para alterar')).click()
+        cy.xpath(loc.CONTAS.FN_XP_BTN_ALTERAR('Carteira')).click()
         cy.get(loc.CONTAS.NOME)
             .clear()
             .type('Conta alterada')
