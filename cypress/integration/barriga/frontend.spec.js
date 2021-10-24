@@ -56,7 +56,15 @@ describe('Should test at a functional level', () => {
         cy.get(loc.MESSAGE).should('contain', 'Conta atualizada com sucesso!')
     })
 
-    it('Should not create account with the same name', () => {
+    it.only('Should not create account with the same name', () => {
+        cy.intercept({
+            method: 'POST',
+            url: '/contas'
+        }, {
+            statusCode: 400,
+            body: { "error": "Já existe uma conta com esse nome!" }
+        }).as('saveContaMesmoNome')
+
         cy.acessarMenuConta()
 
         cy.get(loc.CONTAS.NOME).type('Conta mesmo nome')
