@@ -113,7 +113,7 @@ describe('Should test at a functional level', () => {
         cy.xpath(loc.EXTRATO.FN_XP_BUSCA_ELEMENTO('Desc', '123')).should('exist')
     })
 
-    it.only('Should get balance', () => {
+    it('Should get balance', () => {
         cy.intercept(
             'GET',
             '/transacoes/**',
@@ -187,6 +187,14 @@ describe('Should test at a functional level', () => {
     })
 
     it('Should remove a transaction', () => {
+        cy.intercept({
+            method: 'DELETE',
+            url: '/transacoes/**'
+        }, {
+            statusCode: 204,
+            body: {}
+        }).as('del')
+
         cy.get(loc.MENU.EXTRATO).click()
         cy.xpath(loc.EXTRATO.FN_XP_REMOVER_ELEMENTO('Movimentacao para exclusao')).click()
         cy.get(loc.MESSAGE).should('contain', 'sucesso')
