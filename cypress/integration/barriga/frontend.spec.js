@@ -199,4 +199,30 @@ describe('Should test at a functional level', () => {
         cy.xpath(loc.EXTRATO.FN_XP_REMOVER_ELEMENTO('Movimentacao para exclusao')).click()
         cy.get(loc.MESSAGE).should('contain', 'sucesso')
     })
+
+    it.only('Should validate data send to create an account', () => {
+        cy.intercept(
+            'POST',
+            '/contas',
+            {
+                body: { id: 3, nome: 'Conta de teste', visivel: true, usuario_id: 1 },
+            }
+        ).as('saveConta')
+
+        cy.acessarMenuConta()
+
+        cy.intercept(
+            'GET',
+            '/contas',
+            [
+                { id: 1, nome: 'Carteira', visivel: true, usuario_id: 1 },
+                { id: 2, nome: 'Banco', visivel: true, usuario_id: 1 },
+                { id: 3, nome: 'Conta de teste', visivel: true, usuario_id: 1 }
+            ]
+        ).as('contasSave')
+
+        cy.inserirConta('{CONTROL}')
+        // cy.wait('@saveConta').its('request.body.nome').should('not.be.empty')
+        cy.get(loc.MESSAGE).should('contain', 'Conta inserida com sucesso')
+    })
 })
